@@ -1,0 +1,34 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bootstrap-sha": "d27a49bbe61b74adf7ce7b4549f6ffb94d073c5b",
+  "include-component-in-tag": true,
+  "include-v-in-tag": true,
+  "tag-separator": "@",
+  "separate-pull-requests": true,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "packages": {
+    "bundler": {
+      "release-type": "rust",
+      "extra-files": [
+        {
+          "type": "yaml",
+          "path": "/charts/bundler/Chart.yaml",
+          "jsonpath": "$.appVersion"
+        }
+      ]
+    },
+    "charts/apps": {
+      "release-type": "helm"
+    },
+    "charts/bundler": {
+      "release-type": "helm"
+    },
+    "charts/opa": {
+      "release-type": "helm"
+    },
+    "policy": {
+      "release-type": "simple"
+    }
+  }
+}

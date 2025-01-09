@@ -1,0 +1,7 @@
+{
+  "bundler": "0.1.0",
+  "charts/apps": "0.2.0",
+  "charts/bundler": "0.5.2",
+  "charts/opa": "0.6.3",
+  "policy": "0.1.0"
+}
