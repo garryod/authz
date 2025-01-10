@@ -52,7 +52,7 @@ use tracing::instrument;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use url::Url;
 
-/// A wrapper containing a [`Bundle`] and the serialzied gzipped archive
+/// A wrapper containing a [`Bundle`] and the serialzied gzipped archive. Test
 struct BundleFile<Metadata>
 where
     Metadata: Serialize,
