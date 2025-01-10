@@ -2,6 +2,10 @@ name: Bundler Container
 
 on:
   workflow_call:
+    inputs:
+      release:
+        type: boolean
+        required: true
 
 jobs:
   build_publish:
@@ -46,8 +50,8 @@ jobs:
         uses: docker/build-push-action@v6.10.0
         with:
           context: bundler/
-          push: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags') }}
-          load: ${{ !(github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) }}
+          push: ${{ inputs.release }}
+          load: ${{ !inputs.release }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

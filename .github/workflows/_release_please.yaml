@@ -2,6 +2,17 @@ name: Release Please
 
 on:
   workflow_call:
+    outputs:
+      bundler-released:
+        value: ${{ jobs.release_please.bundler-released }}
+      apps-chart-released:
+        value: ${{ jobs.release_please.apps-chart-released }}
+      bundler-chart-released:
+        value: ${{ jobs.release_please.bundler-chart-released }}
+      opa-chart-released:
+        value: ${{ jobs.release_please.opa-chart-released }}
+      policy-released:
+        value: ${{ jobs.release_please.policy-released }}
 
 jobs:
   release_please:
@@ -10,6 +21,12 @@ jobs:
       contents: write
       pull-requests: write
       id-token: write
+    outputs:
+      bundler-released: ${{ contains(steps.release.outputs.paths_released, 'bundler') }}
+      apps-chart-released: ${{ contains(steps.release.outputs.paths_released, 'charts/apps') }}
+      bundler-chart-released: ${{ contains(steps.release.outputs.paths_released, 'charts/bundler') }}
+      opa-chart-released: ${{ contains(steps.release.outputs.paths_released, 'charts/opa') }}
+      policy-released: ${{ contains(steps.release.outputs.paths_released, 'policy') }}
     steps:
       - name: Checkout source
         uses: actions/checkout@v4.2.2
@@ -17,6 +34,7 @@ jobs:
           fetch-depth: 0
 
       - name: Release Please
+        id: release
         uses: googleapis/release-please-action@v4.1.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}

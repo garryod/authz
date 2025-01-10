@@ -45,7 +45,8 @@ jobs:
   bundler_container:
     # Deduplicate jobs from pull requests and branch pushes within the same repo.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
-    needs: 
+    needs:
+      - release_please
       - bundler_sqlx
       - bundler_lint
       - bundler_test
@@ -53,6 +54,8 @@ jobs:
       contents: read
       packages: write
     uses: ./.github/workflows/_bundler_container.yaml
+    with:
+      release: ${{ needs.release_please.outputs.bundler-released }}
 
   bundler_docs:
     # Deduplicate jobs from pull requests and branch pushes within the same repo.
@@ -73,13 +76,16 @@ jobs:
   policy_container:
     # Deduplicate jobs from pull requests and branch pushes within the same repo.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
-    needs: 
+    needs:
+      - release_please
       - policy_lint
       - policy_test
     permissions:
       contents: read
       packages: write
     uses: ./.github/workflows/_policy_container.yaml
+    with:
+      release: ${{ needs.release_please.outputs.policy-released }}
 
   helm_chart_lint:
     # Deduplicate jobs from pull requests and branch pushes within the same repo.
